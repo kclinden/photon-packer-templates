@@ -7,10 +7,13 @@
         },
     "disk": "/dev/sda",
     "packagelist_file": "packages_appliance.json",
+    "additional_packages": [
+        "open-vm-tools"
+    ],
     "postinstall": [
                     "#!/bin/sh",
                     "sed -i 's/PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd_config",
                     "systemctl restart sshd.service",
-                    "sleep 60"
+                    "tdnf clean all"
                    ]
 }
