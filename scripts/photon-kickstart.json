@@ -8,11 +8,19 @@
     "disk": "/dev/sda",
     "packagelist_file": "packages_appliance.json",
     "additional_packages": [
-        "open-vm-tools"
+        "open-vm-tools",
+        "less"
     ],
+    "network": {
+        "type": "dhcp",
+        "hostname":"photon"
+    },   
     "postinstall": [
                     "#!/bin/sh",
                     "sed -i 's/PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd_config",
+                    "echo 'ClientIdentifier=mac' >> /etc/systemd/network/99-dhcp-en.network",
+                    "systemctl enable sshd-keygen.service",
+                    "systemctl enable sshd.service",
                     "systemctl restart sshd.service",
                     "tdnf clean all"
                    ]

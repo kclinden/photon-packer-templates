@@ -98,10 +98,16 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "only": ["vagrant-vmware_desktop"],
+      "only": ["vagrant-vmware_desktop", "vagrant-virtualbox"],
       "compression_level": 9,
       "vagrantfile_template": "scripts/photon-vagrantfile.rb",
       "output": "photon-{{user `product_version`}}-{{.BuildName}}.box"
+    },
+    {
+      "type": "vagrant-cloud",
+      "box_tag": "kclinden/photon",
+      "access_token": "{{user `cloud_token`}}",
+      "version": "{{user `version`}}"
     }
   ]
   }
