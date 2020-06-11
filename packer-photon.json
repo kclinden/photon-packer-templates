@@ -17,7 +17,6 @@
       "guest_os_type": "other3xlinux-64",
       "iso_url": "{{user `iso_file`}}",
       "iso_checksum": "{{user `iso_sha1sum`}}",
-      "iso_checksum_type": "sha1",
       "ssh_username": "root",
       "ssh_password": "{{user `root_password`}}",
       "ssh_wait_timeout": "60m",
@@ -38,29 +37,6 @@
           "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/photon-kickstart.json photon.media=cdrom",
           "<enter>"
         ]
-    },
-    {
-      "name": "vagrant-virtualbox",
-      "vm_name": "photon",
-      "type": "virtualbox-iso",
-      "headless": false,
-      "hard_drive_interface": "scsi",
-      "disk_size": 20480,
-      "guest_os_type": "Linux_64",
-      "iso_url": "{{user `iso_file`}}",
-      "iso_checksum": "{{user `iso_sha1sum`}}",
-      "iso_checksum_type": "sha1",
-      "ssh_username": "root",
-      "ssh_password": "{{user `root_password`}}",
-      "ssh_wait_timeout": "60m",
-      "boot_wait": "5s",
-      "http_directory": "scripts",
-      "shutdown_command": "shutdown -h now",
-      "boot_command": [
-        "<esc><wait>",
-        "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/photon-kickstart.json photon.media=cdrom",
-        "<enter>"
-      ]
     }
   ],
     "provisioners": [
@@ -102,12 +78,6 @@
       "compression_level": 9,
       "vagrantfile_template": "scripts/photon-vagrantfile.rb",
       "output": "photon-{{user `product_version`}}-{{.BuildName}}.box"
-    },
-    {
-      "type": "vagrant-cloud",
-      "box_tag": "kclinden/photon",
-      "access_token": "{{user `cloud_token`}}",
-      "version": "{{user `version`}}"
     }
   ]
   }
