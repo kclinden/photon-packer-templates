@@ -3,7 +3,8 @@
     "iso_file": "",
     "iso_sha1sum": "",
     "product_version": "",
-    "root_password": "VMware123!"
+    "root_password": "VMware123!",
+    "version": "1.0.0"
   },
   "builders": [
     {
@@ -72,12 +73,20 @@
     }
   ],
   "post-processors": [
-    {
-      "type": "vagrant",
-      "only": ["vagrant-vmware_desktop", "vagrant-virtualbox"],
-      "compression_level": 9,
-      "vagrantfile_template": "scripts/photon-vagrantfile.rb",
-      "output": "photon-{{user `product_version`}}-{{.BuildName}}.box"
-    }
+    [
+      {
+        "type": "vagrant",
+        "only": ["vagrant-vmware_desktop"],
+        "compression_level": 9,
+        "vagrantfile_template": "scripts/photon-vagrantfile.rb",
+        "output": "photon-{{user `product_version`}}-{{.BuildName}}.box"
+      },
+      {
+        "access_token": "{{user `cloud_token`}}",
+        "box_tag": "kclinden/photon3",
+        "type": "vagrant-cloud",
+        "version": "{{user `version`}}"
+      }
+    ]
   ]
-  }
+}

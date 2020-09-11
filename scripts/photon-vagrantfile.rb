@@ -13,7 +13,4 @@ Vagrant.configure('2') do |config|
       v.whitelist_verified = true
     end
   end
-  config.vm.provider "virtualbox" do |v|
-    v.customize ['modifyvm', :id, '--acpi', 'off']
-  end
 end
